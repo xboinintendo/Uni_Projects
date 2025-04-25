@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Склонение существительных русского языка</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #3F51B5;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #E0E0E0;
+            font-style: italic;
+        }
+        .input-area {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+        .results {
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .results h2 {
+            color: #3F51B5;
+            border-bottom: 2px solid #E0E0E0;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .examples {
+            margin-top: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .examples h3 {
+            color: #3F51B5;
+            border-bottom: 2px solid #E0E0E0;
+            padding-bottom: 10px;
+        }
+        .example-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .example-button {
+            background-color: #E0E0E0;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .example-button:hover {
+            background-color: #3F51B5;
+            color: white;
+        }
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Склонение существительных русского языка</h1>
+            <p class="subtitle">Инструмент для склонения существительных мужского рода</p>
+        </header>
+
+        <div class="input-area">
+            <form id="declensionForm">
+                <div class="form-group">
+                    <label for="noun">Введите существительное мужского рода:</label>
+                    <input type="text" id="noun" name="noun" placeholder="Например: дом, стол, компьютер" required>
+                    <div class="error" id="error-message">Пожалуйста, введите существительное мужского рода</div>
+                </div>
+                <button type="submit" id="submitButton">Просклонять</button>
+            </form>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Результаты склонения</h2>
+            <p>Существительное: <strong id="result-noun"></strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Падеж</th>
+                        <th>Форма</th>
+                    </tr>
+                </thead>
+                <tbody id="results-table">
+                    <!-- Results will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="examples">
+            <h3>Примеры существительных</h3>
+            <p>Нажмите на любое слово, чтобы увидеть его склонение:</p>
+            <div class="example-list">
+                <button class="example-button">дом</button>
+                <button class="example-button">стол</button>
+                <button class="example-button">город</button>
+                <button class="example-button">автомобиль</button>
+                <button class="example-button">компьютер</button>
+                <button class="example-button">чай</button>
+                <button class="example-button">сахар</button>
+                <button class="example-button">герой</button>
+                <button class="example-button">отец</button>
+                <button class="example-button">музей</button>
+                <button class="example-button">словарь</button>
+                <button class="example-button">трамвай</button>
+                <button class="example-button">лев</button>
+                <button class="example-button">медведь</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Склонение существительных русского языка</p>
+        </footer>
+    </div>
+
+    <script>
+        // Wait for the DOM to fully load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded");
+            
+            // Function to decline nouns based on the algorithm
+            function nouns(noun) {
+                console.log("Processing noun:", noun);
+                const declensions = {
+                    "именительный": noun
+                };
+                
+                // List of vowels
+                const vowels = "аеёиоуыэюя";
+                
+                // Check if the word starts with a vowel
+                const startsWithVowel = vowels.includes(noun[0].toLowerCase());
+                
+                // Choose preposition for prepositional case
+                const preposition = startsWithVowel ? "об" : "о";
+                
+                // Rules for masculine nouns
+                // Hard consonant ending (дом, стол, город)
+                if (/[бвгджзклмнпрстфхцчшщ]$/.test(noun)) {
+                    declensions["родительный"] = noun + "а";
+                    declensions["дательный"] = noun + "у";
+                    declensions["винительный"] = noun;
+                    declensions["творительный"] = noun + "ом";
+                    declensions["предложный"] = preposition + " " + noun + "е";
+                }
+                
+                // Nouns ending with -й (чай, трамвай, герой, музей)
+                else if (noun.endsWith("й")) {
+                    declensions["родительный"] = noun.slice(0, -1) + "я";
+                    declensions["дательный"] = noun.slice(0, -1) + "ю";
+                    declensions["винительный"] = noun;
+                    declensions["творительный"] = noun.slice(0, -1) + "ем";
+                    declensions["предложный"] = preposition + " " + noun.slice(0, -1) + "е";
+                }
+                
+                // Nouns ending with -ь (автомобиль, словарь, корабль)
+                else if (noun.endsWith("ь")) {
+                    declensions["родительный"] = noun.slice(0, -1) + "я";
+                    declensions["дательный"] = noun.slice(0, -1) + "ю";
+                    declensions["винительный"] = noun;
+                    declensions["творительный"] = noun.slice(0, -1) + "ем";
+                    declensions["предложный"] = preposition + " " + noun.slice(0, -1) + "е";
+                }
+                
+                // Nouns ending with -о
+                else if (noun.endsWith("о")) {
+                    declensions["родительный"] = noun.slice(0, -1) + "а";
+                    declensions["дательный"] = noun.slice(0, -1) + "у";
+                    declensions["винительный"] = noun;
+                    declensions["творительный"] = noun.slice(0, -1) + "ом";
+                    declensions["предложный"] = preposition + " " + noun.slice(0, -1) + "е";
+                }
+                
+                // Default rules for all other cases
+                else {
+                    declensions["родительный"] = noun + "а";
+                    declensions["дательный"] = noun + "у";
+                    declensions["винительный"] = noun;
+                    declensions["творительный"] = noun + "ом";
+                    declensions["предложный"] = preposition + " " + noun + "е";
+                }
+                
+                console.log("Generated declensions:", declensions);
+                return declensions;
+            }
+
+            // Function to display declension results
+            function displayResults(noun) {
+                console.log("Displaying results for:", noun);
+                const results = nouns(noun);
+                document.getElementById('result-noun').textContent = noun;
+                
+                const resultsTable = document.getElementById('results-table');
+                resultsTable.innerHTML = '';
+                
+                // Order of cases in Russian
+                const cases = [
+                    "именительный", 
+                    "родительный", 
+                    "дательный", 
+                    "винительный", 
+                    "творительный", 
+                    "предложный"
+                ];
+                
+                // Case names translation to make it more readable
+                const caseNames = {
+                    "именительный": "Именительный (кто? что?)",
+                    "родительный": "Родительный (кого? чего?)",
+                    "дательный": "Дательный (кому? чему?)",
+                    "винительный": "Винительный (кого? что?)",
+                    "творительный": "Творительный (кем? чем?)",
+                    "предложный": "Предложный (о ком? о чём?)"
+                };
+                
+                // Loop through the cases in the right order
+                cases.forEach(caseType => {
+                    if (results[caseType]) {
+                        const row = document.createElement('tr');
+                        
+                        const caseCell = document.createElement('td');
+                        caseCell.textContent = caseNames[caseType];
+                        row.appendChild(caseCell);
+                        
+                        const formCell = document.createElement('td');
+                        formCell.textContent = results[caseType];
+                        row.appendChild(formCell);
+                        
+                        resultsTable.appendChild(row);
+                    }
+                });
+                
+                document.getElementById('results').style.display = 'block';
+            }
+
+            // Form submission handler
+            const form = document.getElementById('declensionForm');
+            console.log("Form element:", form);
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    console.log("Form submitted");
+                    e.preventDefault();
+                    const noun = document.getElementById('noun').value.trim();
+                    
+                    if (noun) {
+                        document.getElementById('error-message').style.display = 'none';
+                        displayResults(noun);
+                    } else {
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                });
+            } else {
+                console.error("Form not found!");
+            }
+
+            // Example buttons click handler
+            const exampleButtons = document.querySelectorAll('.example-button');
+            exampleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log("Example button clicked:", this.textContent);
+                    const noun = this.textContent;
+                    document.getElementById('noun').value = noun;
+                    displayResults(noun);
+                });
+            });
+            
+            // Add direct click handler for the submit button as an extra precaution
+            const submitButton = document.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.addEventListener('click', function(e) {
+                    console.log("Submit button clicked directly");
+                    e.preventDefault();
+                    const noun = document.getElementById('noun').value.trim();
+                    
+                    if (noun) {
+                        document.getElementById('error-message').style.display = 'none';
+                        displayResults(noun);
+                    } else {
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
